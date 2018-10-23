@@ -8,6 +8,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Represents a Country.
  *
@@ -20,7 +22,7 @@ class Country
      * 3-letter ISO-Code
      *
      * @ORM\Id
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=3)
      * @var string
      */
     private $isoCode;
@@ -28,7 +30,7 @@ class Country
     /**
      * Name
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=64)
      * @var string
      */
     private $name;
