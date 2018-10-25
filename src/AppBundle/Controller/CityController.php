@@ -9,9 +9,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\Country;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends Controller
@@ -25,15 +25,32 @@ class CityController extends Controller
 
         $cities = $cityRepository->findAll();
 
-        if (empty($cities)) {
-            return new Response("No cities available yet.");
-        } else {
-            return new Response('');
-        }
+        $countryRepository = $this->getDoctrine()->getRepository(Country::class);
+
+        $countries = $countryRepository->findAll();
+
+        return $this->render('city.html.twig', ['cities' => $cities, 'countries' => $countries]);
     }
 
+    /**
+     * @Route("/cities/create")
+     */
     public function createAction(Request $request)
     {
+        $cityName = $request->request->get('cityName');
+        $countryIsoCode = $request->request->get('countryIsoCode');
 
+        $countryRepository = $this->getDoctrine()->getRepository(Country::class);
+
+        $country = $countryRepository->find($countryIsoCode);
+
+        $city = new City($cityName, $country);
+
+        $manager = $this->getDoctrine()->getManager();
+
+        $manager->persist($city);
+        $manager->flush();
+
+        $this->redirect('/cities');
     }
 }

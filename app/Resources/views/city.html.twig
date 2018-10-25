@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>City</title>
+    </head>
+    <body>
+        {% if cities %}
+            {% for city in cities %}
+                <div>
+                    {{ city.getName() }}, {{ city.getCountry().getName() }}
+                </div>
+            {% endfor %}
+        {% else %}
+            Es existieren bis jetzt keine Städte.
+        {% endif %}
+        <h1>City</h1>
+        <form method="post" action="/cities/create">
+            <label for="cityNameText">Name</label><input type="text" id="cityNameText" name="cityName"/>
+            <select id="countrySelect" name="countryIsoCode">
+                {% for country in countries %}
+                    <option value="{{ country.getIsoCode() }}">{{ country.getName() }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Speichern"/>
+        </form>
+    </body>
+</html>
