@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Airports</title>
+    </head>
+    <body>
+        <h1>Flughäfen</h1>
+        <form method="post" action="airports/create">
+            <label for="icaoCodeText">ICAO-Code</label>
+            <input type="text" id="icaoCodeText" name="icaoCode" size="4" maxlength="4"/>
+            <br/>
+            <label for="iataCodeText">IATA-Code</label>
+            <input type="text" id="iataCodeText" name="iataCode" size="3" maxlength="4"/>
+            <br/>
+            <label for="nameText">Name</label>
+            <input type="text" id="nameText" name="name" size="64" maxlength="64"/>
+            <br/>
+            <label for="citySelect">Stadt</label>
+            <select id="citySelect" name="cityId">
+                {% for city in cities %}
+                <option value="{{ city.getId() }}">{{ city.getName() }}</option>
+                {% endfor %}
+            </select>
+            <br/>
+            <label for="passengersText">Passagiere (letztes Jahr)</label>
+            <input type="text" id="passengersText" name="passengers"/>
+            <br/>
+            <input type="submit" value="Speichern"/>
+        </form>
+        <br/>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Stadt</th><th>Flughafen</th><th>ICAO</th><th>IATA</th><th>Passagiere</th>
+                </tr>
+            </thead>
+                {% if airports %}
+                    {% for airport in airports %}
+                    <tr>
+                        <td>{{ airport.getCity().getName() }}</td>
+                        <td>{{ airport.getName() }}</td>
+                        <td>{{ airport.getIcaoCode() }}</td>
+                        <td>{{ airport.getIataCode() }}</td>
+                        <td>{{ airport.getPassengers() }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No airports exists yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </body>
+</html>

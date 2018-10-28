@@ -51,6 +51,6 @@ class CityController extends Controller
         $manager->persist($city);
         $manager->flush();
 
-        $this->redirect('/cities');
+        return $this->redirect('/cities');
     }
 }
