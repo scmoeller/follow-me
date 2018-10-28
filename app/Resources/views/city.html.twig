@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>City</title>
+        <title>Städte</title>
+        <link rel="stylesheet" href="bootstrap.min.css"/>
     </head>
     <body>
-        {% if cities %}
-            {% for city in cities %}
-                <div>
-                    {{ city.getName() }}, {{ city.getCountry().getName() }}
-                </div>
-            {% endfor %}
-        {% else %}
-            Es existieren bis jetzt keine Städte.
-        {% endif %}
-        <h1>City</h1>
+        <h1>Städte</h1>
         <form method="post" action="/cities/create">
             <label for="cityNameText">Name</label><input type="text" id="cityNameText" name="cityName"/>
-            <select id="countrySelect" name="countryIsoCode">
+            <label for="countrySelect">Land</label>
+            <select id="countrySelect" name="countryIsoCode" class="custom-select">
                 {% for country in countries %}
                     <option value="{{ country.getIsoCode() }}">{{ country.getName() }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" value="Speichern"/>
+            <input class="btn btn-primary btn-sm" type="submit" value="Speichern"/>
         </form>
-    </body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Stadt</th>
+                    <th scope="col">Land</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if cities %}
+                {% for city in cities %}
+                <tr>
+                    <td>{{ city.getName() }}</td><td>{{ city.getCountry().getName() }}</td>
+                </tr>
+                {% endfor %}
+                    {% else %}
+                        Es existieren bis jetzt keine Städte.
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        </body>
 </html>
